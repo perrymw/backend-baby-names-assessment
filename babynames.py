@@ -40,57 +40,57 @@ Suggested milestones for incremental development:
 
 
 def extract_names(filename):
-    """
-    Given a file name for baby.html, returns a list starting with the year string
-    followed by the name-rank strings in alphabetical order.
-    ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
-    """
-    alpha_name = []
-    with open(filename, "r") as file:
-            words = file.read()
-            year = re.findall(r'Popularity\sin\s(\d\d\d\d)', words)[0]
-            names = re.findall(
-                r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', words)
-    for threple in names:
-        boy = '{} {}'.format(threple[1], threple[0])
-        girl = '{} {}'.format(threple[2], threple[0])
-        alpha_name.extend([boy] + [girl])
-    return([year] + sorted(alpha_name))
+        """
+        Given a file name for baby.html, returns a list starting with the year string
+        followed by the name-rank strings in alphabetical order.
+        ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
+        """
+        alpha_name = []
+        with open(filename, "r") as file:
+                words = file.read()
+                year = re.findall(r'Popularity\sin\s(\d\d\d\d)', words)[0]
+                names = re.findall(
+                    r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', words)
+        for threple in names:
+            boy = '{} {}'.format(threple[1], threple[0])
+            girl = '{} {}'.format(threple[2], threple[0])
+            alpha_name.extend([boy] + [girl])
+        return([year] + sorted(alpha_name))
 
 
 def create_parser():
-    """Create a cmd line parser object with 2 argument definitions"""
-    parser = argparse.ArgumentParser()
-    parser.add_argument(
-        '--summaryfile', help='creates a summary file', action='store_true')
-    # The nargs option instructs the parser to expect 1 or more filenames.
-    # It will also expand wildcards just like the shell, e.g. 'baby*.html' will work.
-    parser.add_argument('files', help='filename(s) to parse', nargs='+')
-    return parser
+        """Create a cmd line parser object with 2 argument definitions"""
+        parser = argparse.ArgumentParser()
+        parser.add_argument(
+            '--summaryfile', help='creates a summary file', action='store_true')
+        # The nargs option instructs the parser to expect 1 or more filenames.
+        # It will also expand wildcards just like the shell, e.g. 'baby*.html' will work.
+        parser.add_argument('files', help='filename(s) to parse', nargs='+')
+        return parser
 
 
 def main():
-    parser = create_parser()
-    args = parser.parse_args()
-    if not args:
-        parser.print_usage()
-        sys.exit(1)
+        parser = create_parser()
+        args = parser.parse_args()
+        if not args:
+            parser.print_usage()
+            sys.exit(1)
 
-    file_list = args.files
+        file_list = args.files
 
-    # option flag
-    create_summary = args.summaryfile
+        # option flag
+        create_summary = args.summaryfile
 
-    # +++your code here+++
-    # For each filename, get the names, then either print the text output
-    # or write it to a summary file
-    for f in file_list:
-        with open(f + '.summary', "w+") as file:
-            text = '\n'.join(extract_names(f)) + '\n'
-            if create_summary:
-                file.write(text)
-            else:
-                print(text)    
+        # +++your code here+++
+        # For each filename, get the names, then either print the text output
+        # or write it to a summary file
+        for f in file_list:
+            with open(f + '.summary', "w+") as file:
+                text = '\n'.join(extract_names(f)) + '\n'
+                if create_summary:
+                    file.write(text)
+                else:
+                    print(text)    
 
 if __name__ == '__main__':
     main()
