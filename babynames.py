@@ -17,10 +17,8 @@ import argparse
 """
 Define the extract_names() function below and change main()
 to call it.
-
 For writing regex, it's nice to include a copy of the target
 text for inspiration.
-
 Here's what the html looks like in the baby.html files:
 ...
 <h3 align="center">Popularity in 1990</h3>
@@ -29,7 +27,6 @@ Here's what the html looks like in the baby.html files:
 <tr align="right"><td>2</td><td>Christopher</td><td>Ashley</td>
 <tr align="right"><td>3</td><td>Matthew</td><td>Brittany</td>
 ...
-
 Suggested milestones for incremental development:
  -Extract the year and print it
  -Extract the names and rank numbers and just print them
@@ -45,17 +42,8 @@ def extract_names(filename):
     followed by the name-rank strings in alphabetical order.
     ['2006', 'Aaliyah 91', Aaron 57', 'Abagail 895', ' ...]
     """
-    alpha_name = []
-    with open(filename, "r") as file:
-            words = file.read()
-            year = re.findall(r'Popularity\sin\s(\d\d\d\d)', words)[0]
-            names = re.findall(
-                r'<td>(\d+)</td><td>(\w+)</td><td>(\w+)</td>', words)
-    for threple in names:
-        boy = '{} {}'.format(threple[1], threple[0])
-        girl = '{} {}'.format(threple[2], threple[0])
-        alpha_name.extend([boy] + [girl])
-    return([year] + sorted(alpha_name))
+    # +++your code here+++
+    return
 
 
 def create_parser():
@@ -72,6 +60,7 @@ def create_parser():
 def main():
     parser = create_parser()
     args = parser.parse_args()
+
     if not args:
         parser.print_usage()
         sys.exit(1)
@@ -84,13 +73,7 @@ def main():
     # +++your code here+++
     # For each filename, get the names, then either print the text output
     # or write it to a summary file
-    for f in file_list:
-        with open(f + '.summary', "w+") as file:
-            text = '\n'.join(extract_names(f)) + '\n'
-            if create_summary:
-                file.write(text)
-            else:
-                print(text)    
+
 
 if __name__ == '__main__':
     main()
